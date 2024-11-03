@@ -3,7 +3,8 @@ using namespace std;
 #include "vec3.h"
 
 int main() {
-    Vector3D obj1(3.0, 4.0, 5.0);
-    cout << obj1.getx();
+    Vector3D vec1(3.0, 4.0, 5.0);
+    Vector3D negv = -vec1;
+    negv.display();
     return 0;
 }

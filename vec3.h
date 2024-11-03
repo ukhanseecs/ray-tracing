@@ -26,6 +26,14 @@ class Vector3D{
     double getz() const{
         return vec[2];
     }
-
+// display vector
+    void display() const{
+        cout << vec[0] <<','<< vec[1] <<',' << vec[2];
+    }
+// operator overloading
+    // negating a vector
+    Vector3D operator-() const{
+        return Vector3D(-vec[0], -vec[1], -vec[2]);
+    }
 };
 #endif
