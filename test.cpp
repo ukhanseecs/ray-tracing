@@ -10,5 +10,8 @@ int main() {
     negvec1.display();
     cout << "\n";
     vec1.display();
+    cout << "\n";
+    vec1 -= vec2;
+    vec1.display();
     return 0;
 }
