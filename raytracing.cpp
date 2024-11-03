@@ -1,4 +1,6 @@
+using namespace std;
 #include <iostream>
+#include "vec3.h"
 
 int main() {
 
@@ -9,7 +11,7 @@ int main() {
 
     // Render
 
-    std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+    cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
     for (int j = 0; j < image_height; j++) {
         std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
@@ -22,9 +24,9 @@ int main() {
             int ig = int(255.999 * g);
             int ib = int(255.999 * b);
 
-            std::cout << ir << ' ' << ig << ' ' << ib << '\n';
+            cout << ir << ' ' << ig << ' ' << ib << '\n';
         }
     }
-    std::clog << "\rDone.                 \n";
+    clog << "\rDone.                 \n";
 
 }
