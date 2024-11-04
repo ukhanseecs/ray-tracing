@@ -49,5 +49,13 @@ class Vector3D{
         vec[2] -= other.vec[2];
         return *this;
     }
+    // read only access
+    double operator[](int i) const {
+        return vec[i];
+    }
+    //read write access
+    double& operator[](int i){
+        return vec[i];
+    }
 };
 #endif
