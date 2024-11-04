@@ -19,7 +19,7 @@ int main() {
     cout << "\n read write access \n"<< vec1[0];
     // Test scalar multiplication
     vec1 *= 2.0;
-    cout << "\n After scalar multiplication by 2: ";
+    cout << "\nAfter scalar multiplication by 2: ";
     vec1.display();
     cout << endl;
 
@@ -28,5 +28,10 @@ int main() {
     cout << "After scalar division by 2: ";
     vec1.display();
     cout << endl;
+
+    // Test length and length squared
+    cout << "Length of vec1: " << vec1.length() << endl;
+    cout << "Length squared of vec1: " << vec1.length_squared() << endl;
+
     return 0;
 }

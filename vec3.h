@@ -4,6 +4,7 @@ using namespace std;
 #define VEC3_H
 
 #include <iostream>
+#include <cmath>
 
 class Vector3D{
     private:
@@ -70,6 +71,14 @@ class Vector3D{
         vec[1] *= 1/t;
         vec[2] *= 1/t;
         return *this;
+    }
+    // length
+    double length() const{
+        return sqrt(vec[0]*vec[0] + vec[1]*vec[1] + vec[2]*vec[2]);
+    }
+    // lenght squared
+    double length_squared() const{
+        return (vec[0]*vec[0] + vec[1]*vec[1] + vec[2]*vec[2]);
     }
 };
 #endif
