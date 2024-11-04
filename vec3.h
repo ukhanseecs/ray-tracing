@@ -84,5 +84,39 @@ class Vector3D{
 inline friend ostream& operator<<(ostream& out, const Vector3D& other){
     return out<<other.vec[0] << ' ' <<other.vec[1]<< ' ' <<other.vec[2]<< ' ';
 }
+// vector addition
+inline friend Vector3D operator+(const Vector3D& v1, const Vector3D& v2) {
+    return Vector3D(v1.vec[0]+v2.vec[0],
+        v1.vec[1]+v2.vec[1],
+        v1.vec[2]+v2.vec[2]);
+}
+//vector subtraction
+inline friend Vector3D operator-(const Vector3D& v1, const Vector3D& v2) {
+    return Vector3D(v1.vec[0]-v2.vec[0],
+        v1.vec[1]-v2.vec[1],
+        v1.vec[2]-v2.vec[2]);
+}
+//element wise multiplication
+inline friend Vector3D operator*(const Vector3D& v1, const Vector3D& v2) {
+    return Vector3D(v1.vec[0]*v2.vec[0],
+        v1.vec[1]*v2.vec[1],
+        v1.vec[2]*v2.vec[2]);
+}
+//scalar into vector
+inline friend Vector3D operator*(double t, const Vector3D& v1) {
+    return Vector3D(t* v1.vec[0],
+        t*v1.vec[1],
+        t*v1.vec[2]);
+}
+//vector into scalar
+inline friend Vector3D operator*(const Vector3D& v1, double t) {
+    return t * v1; // calls the above scalar into vector
+}
+// scalar division
+inline friend Vector3D operator/(double t, const Vector3D& v2) {
+    return Vector3D(1/t*v2.vec[0],
+        1/t*v2.vec[1],
+        1/t*v2.vec[2]);
+}
 };
 #endif
