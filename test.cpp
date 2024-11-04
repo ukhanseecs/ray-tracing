@@ -17,5 +17,16 @@ int main() {
     cout << "\n read only access \n"<< vec1[0];
     vec1[0] = 8;
     cout << "\n read write access \n"<< vec1[0];
+    // Test scalar multiplication
+    vec1 *= 2.0;
+    cout << "\n After scalar multiplication by 2: ";
+    vec1.display();
+    cout << endl;
+
+    // Test scalar division
+    vec1 /= 2.0;
+    cout << "After scalar division by 2: ";
+    vec1.display();
+    cout << endl;
     return 0;
 }

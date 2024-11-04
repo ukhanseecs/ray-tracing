@@ -57,5 +57,19 @@ class Vector3D{
     double& operator[](int i){
         return vec[i];
     }
+    // scalar multiplication
+    Vector3D& operator*=(double t) {
+        vec[0] *= t;
+        vec[1] *= t;
+        vec[2] *= t;
+        return *this;
+    }
+    // scalar division
+    Vector3D& operator/=(double t) {
+        vec[0] *= 1/t;
+        vec[1] *= 1/t;
+        vec[2] *= 1/t;
+        return *this;
+    }
 };
 #endif
