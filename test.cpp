@@ -4,7 +4,7 @@ using namespace std;
 
 int main() {
     Vector3D vec1(3.0, 4.0, 5.0);
-    Vector3D vec2(7.0, 6.0, 5.0);
+    Vector3D vec2(7.0, 6.0, 7.0);
     Vector3D negvec1 = -vec1;
     vec1 += vec2;
     cout<<"negated vec1 \n";
@@ -55,6 +55,18 @@ int main() {
 
     Vector3D scalarDivision = vec1 / 2.0;
     cout << "Scalar Division (vec1 / 2): " << scalarDivision << endl;
+
+    // Test dot product
+    double dotProduct = dot(vec1, vec2);
+    cout << "Dot Product of vec1 and vec2: " << dotProduct << endl;
+
+    // Test cross product
+    Vector3D crossProduct = scalar(vec1, vec2);
+    cout << "Cross Product of vec1 and vec2: " << crossProduct << endl;
+
+    // Test unit vector
+    Vector3D unitVector = scalar(vec1);
+    cout << "Unit Vector of vec1: " << unitVector << endl;
 
     return 0;
 }

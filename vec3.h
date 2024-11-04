@@ -118,5 +118,22 @@ inline friend Vector3D operator/(const Vector3D& v2, double t) {
         1/t*v2.vec[1],
         1/t*v2.vec[2]);
 }
+//dot product
+double friend dot(const Vector3D& v1, const Vector3D& v2){
+    return v1.vec[0]*v2.vec[0]
+           + v1.vec[1]*v2.vec[1]
+           + v1.vec[2]*v2.vec[2];
+}
+//cross product
+inline friend Vector3D scalar(const Vector3D& v1, const Vector3D& v2) {
+        return Vector3D(
+        v1.vec[1] * v2.vec[2] - v1.vec[2] * v2.vec[1],   // x-component
+        v1.vec[2] * v2.vec[0] - v1.vec[0] * v2.vec[2],   // y-component
+        v1.vec[0] * v2.vec[1] - v1.vec[1] * v2.vec[0]);  // z-component
+}
+//unit vector
+inline friend Vector3D scalar(const Vector3D& v1) {
+        return v1/v1.length();
+}
 };
 #endif
