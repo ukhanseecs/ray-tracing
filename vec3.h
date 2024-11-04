@@ -113,7 +113,7 @@ inline friend Vector3D operator*(const Vector3D& v1, double t) {
     return t * v1; // calls the above scalar into vector
 }
 // scalar division
-inline friend Vector3D operator/(double t, const Vector3D& v2) {
+inline friend Vector3D operator/(const Vector3D& v2, double t) {
     return Vector3D(1/t*v2.vec[0],
         1/t*v2.vec[1],
         1/t*v2.vec[2]);
