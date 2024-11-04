@@ -135,5 +135,8 @@ inline friend Vector3D scalar(const Vector3D& v1, const Vector3D& v2) {
 inline friend Vector3D scalar(const Vector3D& v1) {
         return v1/v1.length();
 }
+
+using point3 = Vector3D;
+
 };
 #endif
