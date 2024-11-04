@@ -33,5 +33,7 @@ int main() {
     cout << "Length of vec1: " << vec1.length() << endl;
     cout << "Length squared of vec1: " << vec1.length_squared() << endl;
 
+    // Test <<
+    cout << "vec1 :"<< vec1;
     return 0;
 }

@@ -80,5 +80,9 @@ class Vector3D{
     double length_squared() const{
         return (vec[0]*vec[0] + vec[1]*vec[1] + vec[2]*vec[2]);
     }
+// output vector as string <<
+inline friend ostream& operator<<(ostream& out, const Vector3D& other){
+    return out<<other.vec[0] << ' ' <<other.vec[1]<< ' ' <<other.vec[2]<< ' ';
+}
 };
 #endif
