@@ -2,4 +2,4 @@
 /build
 raytracing.exe
 testvec3.exe
-*.exe
+/*.exe
