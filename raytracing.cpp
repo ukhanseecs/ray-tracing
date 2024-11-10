@@ -3,17 +3,32 @@ using namespace std;
 #include "color.h"
 #include "vec3.h"
 #include "ray.h"
-
+#include <cmath>
 #include <iostream>
 #include "vec3.h"
 
+bool intersection(const Vector3D sphere_center, double radius, const Ray& r) {
+    Vector3D oc = sphere_center - r.getorigin();
+    auto a = dot(r.getdirection(), r.getdirection());
+    auto b = -2.0 * dot(r.getdirection(), oc);
+    auto c = dot(oc, oc) - radius * radius;
+    auto discriminant = b * b - 4 * a * c;
+    return (discriminant >= 0);
+}
+
 color ray_color(const Ray& r) {
     //compute the color based on the ray r
-    Vector3D unitVector = unit_vec(r.direction);
+    // if intersects
+    if (intersection(Vector3D(0, 0, -1), 0.5, r))
+        return color(0.1,1,0.2);
+
+    Vector3D unitVector = unit_vec(r.getdirection());
     auto a = 0.5*(unitVector.gety()+1);
-    return (1-a)*color(1.0,1.0,1.0) + a*color(0.5,0.7,1);
+    return (1-a)*color(1.0,1.0,1.0) + a*color(0.5,0,1);
     // different color as r's direction will always be different
 }
+
+
 
 int main() {
     //Set Up Image Parameters
