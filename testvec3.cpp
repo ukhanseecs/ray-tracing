@@ -65,7 +65,7 @@ int main() {
     cout << "Cross Product of vec1 and vec2: " << crossProduct << endl;
 
     // Test unit vector
-    Vector3D unitVector = scalar(vec1);
+    Vector3D unitVector = unit_vec(vec1);
     cout << "Unit Vector of vec1: " << unitVector << endl;
 
     return 0;

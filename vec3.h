@@ -6,6 +6,7 @@ using namespace std;
 #include <iostream>
 #include <cmath>
 
+
 class Vector3D{
     private:
         double vec[3];
@@ -132,11 +133,10 @@ inline friend Vector3D scalar(const Vector3D& v1, const Vector3D& v2) {
         v1.vec[0] * v2.vec[1] - v1.vec[1] * v2.vec[0]);  // z-component
 }
 //unit vector
-inline friend Vector3D scalar(const Vector3D& v1) {
+inline friend Vector3D unit_vec(const Vector3D& v1) {
         return v1/v1.length();
 }
 
-using point3 = Vector3D;
 
 };
 #endif
