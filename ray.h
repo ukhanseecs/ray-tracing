@@ -12,7 +12,7 @@ class Ray {
 
         Ray(const Vector3D& origin, const Vector3D& direction) : origin(origin),direction(direction) {}
 
-        Vector3D point_at_t(double t){
+        Vector3D point_at_t(double t) const {
             return origin + (t * direction);
         }
 

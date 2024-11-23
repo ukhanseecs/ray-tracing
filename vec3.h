@@ -15,7 +15,7 @@ class Vector3D{
         Vector3D() {
             vec[0] = 0; vec[1] = 0; vec[2] = 0;
         }
-        Vector3D(float x, float y, float z) {
+        Vector3D(double x, double y, double z) {
             vec[0] = x; vec[1] = y; vec[2] = z;
         }
 //component access
