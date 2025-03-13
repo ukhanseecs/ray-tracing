@@ -19,19 +19,22 @@ double intersection(const Vector3D sphere_center, double radius, const Ray& r) {
     Vector3D oc = r.getorigin() - sphere_center;
     
     // Quadratic formula coefficients
-    auto a = dot(r.getdirection(), r.getdirection());  // squared length of ray direction
-    auto b = 2.0 * dot(oc, r.getdirection());         // 2 times dot product of oc and ray direction
-    auto c = dot(oc, oc) - radius * radius;           // squared length of oc minus squared radius
+    // squared length of ray direction vector
+    auto a = r.getdirection().length_squared();
+    // dot product of ray direction and vector to sphere center
+    auto h = dot(r.getdirection(), oc);
+    // length of vector to sphere center squared minus radius squared
+    auto c = oc.length_squared() - radius * radius;
     
     // Calculate discriminant to determine number of intersections
-    auto discriminant = b * b - 4 * a * c;
+    auto discriminant = h * h - a * c;
 
     // If discriminant is negative, ray misses sphere
     if (discriminant < 0) {
         return -1.0;
     } else {
         // Return nearest intersection point using quadratic formula
-        return (-b - sqrt(discriminant)) / (2.0 * a);
+        return (h - sqrt(discriminant)) / (a);
     }
 }
 
@@ -51,6 +54,8 @@ color ray_color(const Ray& r) {
     auto a = 0.5 * (unit_direction.gety() + 1.0);
     return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0);
 }
+
+
 
 
 
