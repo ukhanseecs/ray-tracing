@@ -28,7 +28,7 @@ class hittable_list : public hittable {
         //   t_max: Maximum acceptable t value for intersection
         //   rec: Record to store intersection information
         // Returns: true if ray intersects any object in the list, false otherwise
-        
+
         bool hit(const Ray& r, double t_min, double t_max, hit_record& rec) const override{
             hit_record temp_rec; // Temporary record to store intersection information
             bool hit_anything = false; // Initialize hit flag to false
