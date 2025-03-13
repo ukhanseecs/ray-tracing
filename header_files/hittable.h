@@ -10,9 +10,9 @@ class hit_record {
         Vector3D normal; // Surface normal at intersection point
         double t;        // Parameter t along the ray where intersection occurs
         bool front_face; // True if ray intersects front face of object
-        // et the normal and front_face values based on the ray and outward normal
+        // Set the normal and front_face values based on the ray and outward normal
         void set_face_normal(const Ray& r, const Vector3D& outward_normal) {
-            front_face = dot(r.getdirection(), outward_normal) < 0;
+            front_face = dot(r.getDirection(), outward_normal) < 0;
             normal = front_face ? outward_normal : -outward_normal;
         }
 };
@@ -31,8 +31,6 @@ class hittable {
         //   rec: Record to store intersection information
         // Returns: true if ray intersects the object, false otherwise
         virtual bool hit(const Ray& r, double t_min, double t_max, hit_record& rec) const = 0;
-
-    
 };
 
 #endif

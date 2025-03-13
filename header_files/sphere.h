@@ -11,7 +11,7 @@ class sphere : public hittable {
         double radius;      // Radius of the sphere
     public:
         // Constructor: initializes sphere with center point and radius
-        sphere(const Vector3D& cen, double r) : center(cen), radius(r) {};
+        sphere(const Vector3D& cen, double r) : center(cen), radius(r) {}
 
         // Determines if a ray intersects with the sphere
         // Parameters:
@@ -21,11 +21,11 @@ class sphere : public hittable {
         //   rec: Record to store intersection information
         bool hit(const Ray& r, double t_min, double t_max, hit_record& rec) const override{
             // Vector from ray origin to sphere center
-            Vector3D oc = r.getorigin() - center;
+            Vector3D oc = r.getOrigin() - center;
             
             // Calculate quadratic equation coefficients
-            auto a = r.getdirection().length_squared();
-            auto h = dot(r.getdirection(), oc);
+            auto a = r.getDirection().length_squared();
+            auto h = dot(r.getDirection(), oc);
             auto c = oc.length_squared() - radius * radius;
             
             // Calculate discriminant to determine if ray hits sphere
@@ -52,9 +52,8 @@ class sphere : public hittable {
             // Record the intersection details
             rec.t = root;                       // Record intersection distance
             rec.p = r.point_at_t(rec.t);       // Calculate intersection point
-            // rec.normal = (rec.p - center) / radius;  // Calculate surface normal
-            Vector3D outward_normal = (rec.p - center) / radius; // Calculate outward normal
-            rec.set_face_normal(r, outward_normal); // Set front face normal
+            Vector3D normal = (rec.p - center) / radius; // Calculate normal
+            rec.set_face_normal(r, normal); // Set front face normal
 
             return true;
         }

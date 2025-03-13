@@ -7,13 +7,21 @@ using namespace std;
 
 color ray_color(const Ray& r, const hittable& list) { 
     hit_record rec; // Record to store intersection information
+
     if (list.hit(r, 0, infinity, rec)) { // If the ray hits an object
-        return 0.5 * (rec.normal + color(1, 1, 1)); // Return normal map color 
+        // display
+        std::cerr << "Hit detected! Normal: "  
+                  << rec.normal.getx() << "," 
+                  << rec.normal.gety() << "," 
+                  << rec.normal.getz() << std::endl;
+        // Calculate the color based on the normal at the hit point
+        color normal_color = rec.normal + color(1, 1, 1); // Map normal to RGB [0,1]
+        return 0.5 * normal_color; // Return normal map color 
     }
-    
-    Vector3D unit_direction = unit_vec(r.getdirection()); // Get unit direction vector
-    auto a = 0.5 * (unit_direction.gety() + 1.0); // Scale y component to [0,1]
-    return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0); // Linearly blend white and blue color
+
+    Vector3D unit_direction = unit_vec(r.getDirection()); // Get unit direction vector
+    auto blend_factor = 0.5 * (unit_direction.gety() + 1.0); // Scale y component to [0,1]
+    return (1.0 - blend_factor) * color(1.0, 1.0, 1.0) + blend_factor * color(0.5, 0.7, 1.0); // Linearly blend white and blue color
 }
 
 
@@ -21,7 +29,7 @@ color ray_color(const Ray& r, const hittable& list) {
 
 
 int main() {
-    hittable_list list; //list of hittable objects
+    HittableList list; //list of hittable objects
     list.add(make_shared<sphere>(Vector3D(0, 0, -1), 0.5)); //add a sphere to the list
     list.add(make_shared<sphere>(Vector3D(0, -100.5, -1), 100)); //add a ground sphere to the list
 
@@ -45,14 +53,13 @@ int main() {
     Vector3D delta_v = viewport_v / image_height;
 
     //Calculate Upper-Left Corner of the Viewport
-    Vector3D viewport_upper_left = camera_center - Vector3D(viewport_width/2, -viewport_height/2, focal_length);
-    Vector3D pixel00_loc = viewport_upper_left + 0.5 * (delta_u - delta_v);
+    Vector3D viewport_upper_left = camera_center - Vector3D(0, 0, focal_length) - Vector3D(viewport_width/2, -viewport_height/2, 0);
+    Vector3D pixel00_loc = viewport_upper_left + 0.5 * (delta_u + delta_v);
 
     // Render
     cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
     for (int j = 0; j < image_height; j++) {
-        std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
         for (int i = 0; i < image_width; i++) {
             Vector3D pixel_center = pixel00_loc + (i * delta_u) + (j * delta_v);
             Vector3D ray_direction = unit_vec(pixel_center - camera_center);
@@ -62,5 +69,5 @@ int main() {
             write_color(cout, pixel_color);
         }
     }
-    clog << "\rDone.                 \n";
+    clog << "\rDone.\n";
 }

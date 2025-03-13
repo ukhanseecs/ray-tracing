@@ -10,16 +10,16 @@ using std::make_shared;
 using std::shared_ptr;
 
 // Class to store a list of hittable objects
-class hittable_list : public hittable { 
+class HittableList : public hittable { 
     public:
-        std::vector<shared_ptr<hittable>> objects; // List of hittable objects
+        std::vector<shared_ptr<hittable>> m_objects; // List of hittable objects
 
-        hittable_list() {} 
-        hittable_list(shared_ptr<hittable> object) { add(object); } 
+        HittableList() {} 
+        HittableList(shared_ptr<hittable> object) { add(object); } 
 
-        void clear() { objects.clear(); } // Clear the list of objects
+        void clear() { m_objects.clear(); } // Clear the list of objects
 
-        void add(shared_ptr<hittable> object) { objects.push_back(object); } // Add an object to the list
+        void add(shared_ptr<hittable> object) { m_objects.push_back(object); } // Add an object to the list
 
         // Determine if a ray intersects any object in the list and store the intersection information
         // Parameters:
@@ -34,7 +34,7 @@ class hittable_list : public hittable {
             bool hit_anything = false; // Initialize hit flag to false
             auto closest_so_far = t_max; // Initialize closest intersection distance to maximum value
 
-            for (const auto& object: objects){ // Loop through all objects in the list
+            for (const auto& object: m_objects){ // Loop through all objects in the list
                 if (object->hit(r, t_min, closest_so_far, temp_rec)){ // If the ray intersects the object
                     hit_anything = true; // Set hit flag to true
                     closest_so_far = temp_rec.t; // Update closest intersection distance

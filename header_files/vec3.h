@@ -67,9 +67,9 @@ class Vector3D{
     }
     // scalar division
     Vector3D& operator/=(double t) {
-        vec[0] *= 1/t;
-        vec[1] *= 1/t;
-        vec[2] *= 1/t;
+        vec[0] /= t;  // Fixed: Use direct division instead of multiplying by reciprocal
+        vec[1] /= t;
+        vec[2] /= t;
         return *this;
     }
     // length
@@ -114,9 +114,9 @@ inline friend Vector3D operator*(const Vector3D& v1, double t) {
 }
 // scalar division
 inline friend Vector3D operator/(const Vector3D& v2, double t) {
-    return Vector3D(1/t*v2.vec[0],
-        1/t*v2.vec[1],
-        1/t*v2.vec[2]);
+    return Vector3D(v2.vec[0]/t,  // Fixed: Direct division instead of multiplication by reciprocal
+        v2.vec[1]/t,
+        v2.vec[2]/t);
 }
 //dot product
 double friend dot(const Vector3D& v1, const Vector3D& v2){
@@ -125,15 +125,15 @@ double friend dot(const Vector3D& v1, const Vector3D& v2){
            + v1.vec[2]*v2.vec[2];
 }
 //cross product
-inline friend Vector3D scalar(const Vector3D& v1, const Vector3D& v2) {
-        return Vector3D(
+inline friend Vector3D cross(const Vector3D& v1, const Vector3D& v2) {  // Fixed: Renamed from scalar to cross
+    return Vector3D(
         v1.vec[1] * v2.vec[2] - v1.vec[2] * v2.vec[1],   // x-component
         v1.vec[2] * v2.vec[0] - v1.vec[0] * v2.vec[2],   // y-component
         v1.vec[0] * v2.vec[1] - v1.vec[1] * v2.vec[0]);  // z-component
 }
 //unit vector
 inline friend Vector3D unit_vec(const Vector3D& v1) {
-        return v1/v1.length();
+    return v1/v1.length();
 }
 
 
