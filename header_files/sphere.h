@@ -52,7 +52,9 @@ class sphere : public hittable {
             // Record the intersection details
             rec.t = root;                       // Record intersection distance
             rec.p = r.point_at_t(rec.t);       // Calculate intersection point
-            rec.normal = (rec.p - center) / radius;  // Calculate surface normal
+            // rec.normal = (rec.p - center) / radius;  // Calculate surface normal
+            Vector3D outward_normal = (rec.p - center) / radius; // Calculate outward normal
+            rec.set_face_normal(r, outward_normal); // Set front face normal
 
             return true;
         }
