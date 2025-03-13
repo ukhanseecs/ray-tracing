@@ -7,16 +7,30 @@ using namespace std;
 #include <iostream>
 #include "vec3.h"
 
+// Function to calculate intersection of a ray with a sphere
+// Parameters:
+//   sphere_center: center point of the sphere
+//   radius: radius of the sphere
+//   r: the ray to test for intersection
+// Returns: 
+//   t value where ray intersects sphere (negative if no intersection)
 double intersection(const Vector3D sphere_center, double radius, const Ray& r) {
+    // Vector from ray origin to sphere center
     Vector3D oc = r.getorigin() - sphere_center;
-    auto a = dot(r.getdirection(), r.getdirection());
-    auto b = 2.0 * dot(oc, r.getdirection());
-    auto c = dot(oc, oc) - radius * radius;
+    
+    // Quadratic formula coefficients
+    auto a = dot(r.getdirection(), r.getdirection());  // squared length of ray direction
+    auto b = 2.0 * dot(oc, r.getdirection());         // 2 times dot product of oc and ray direction
+    auto c = dot(oc, oc) - radius * radius;           // squared length of oc minus squared radius
+    
+    // Calculate discriminant to determine number of intersections
     auto discriminant = b * b - 4 * a * c;
 
+    // If discriminant is negative, ray misses sphere
     if (discriminant < 0) {
         return -1.0;
     } else {
+        // Return nearest intersection point using quadratic formula
         return (-b - sqrt(discriminant)) / (2.0 * a);
     }
 }
