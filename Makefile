@@ -1,3 +1,9 @@
+# commands:
+# make - compiles the source files and generates the executable
+# make run - runs the executable and generates the output.ppm file
+# make clean - removes the build files and the output.ppm file
+
+
 # Compiler settings
 CXX = g++
 CXXFLAGS = -Wall -O2 -std=c++17
@@ -26,6 +32,6 @@ run: $(TARGET)
 
 # Clean build files
 clean:
-	rm -f $(OBJS) $(TARGET) output.ppm
+	del /Q $(OBJS) $(TARGET).exe output.ppm 2>NUL || echo Files already cleaned
 
 .PHONY: all clean run
