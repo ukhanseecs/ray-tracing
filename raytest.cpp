@@ -1,5 +1,4 @@
-#include "ray.h"
-#include "vec3.h"
+#include "header_files/utility.h"
 #include <iostream>
 
 void test_ray() {

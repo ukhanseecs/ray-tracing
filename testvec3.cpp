@@ -1,6 +1,6 @@
 using namespace std;
 #include <iostream>
-#include "vec3.h"
+#include "header_files/utility.h"
 
 int main() {
     Vector3D vec1(3.0, 4.0, 5.0);
