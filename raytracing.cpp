@@ -1,11 +1,12 @@
 using namespace std;
 
-#include "color.h"
-#include "vec3.h"
-#include "ray.h"
+#include "header_files/color.h"
+#include "header_files/vec3.h"
+#include "header_files/ray.h"
+#include "header_files/vec3.h"
+
 #include <cmath>
 #include <iostream>
-#include "vec3.h"
 
 // Function to calculate intersection of a ray with a sphere
 // Parameters:
