@@ -3,8 +3,7 @@ using namespace std;
 #ifndef VEC3_H
 #define VEC3_H
 
-#include <iostream>
-#include <cmath>
+#include "utility.h"
 
 
 class Vector3D{

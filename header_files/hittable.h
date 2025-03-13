@@ -1,7 +1,7 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
-#include "ray.h"
+#include "utility.h"
 
 // Class to store information about a ray-object intersection
 class hit_record {

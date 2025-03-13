@@ -1,31 +1,19 @@
 using namespace std;
 
-#include "header_files/color.h"
-#include "header_files/vec3.h"
-#include "header_files/ray.h"
-#include "header_files/vec3.h"
+#include "header_files/utility.h"
 #include "header_files/sphere.h"
 #include "header_files/hittable.h"
+#include "header_files/hittable_list.h"
 
-#include <cmath>
-#include <iostream>
-
-
-color ray_color(const Ray& r) {
-    //check for sphere intersection
-    // if t>0, ray hits the sphere
-    auto t = hit(Vector3D(0, 0, -1), 0.5, r);
-    //calculate the normal and visualize it for when t>0
-    if (t > 0.0) {
-        Vector3D hit_point = r.point_at_t(t);
-        Vector3D normal = unit_vec(hit_point - Vector3D(0, 0, -1));
-        return 0.5 * color(normal.getx() + 1, normal.gety() + 1, normal.getz() + 1);
+color ray_color(const Ray& r, const hittable& list) { 
+    hit_record rec; // Record to store intersection information
+    if (list.hit(r, 0, infinity, rec)) { // If the ray hits an object
+        return 0.5 * (rec.normal + color(1, 1, 1)); // Return normal map color 
     }
-
-    //bg color
-    Vector3D unit_direction = unit_vec(r.getdirection());
-    auto a = 0.5 * (unit_direction.gety() + 1.0);
-    return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0);
+    
+    Vector3D unit_direction = unit_vec(r.getdirection()); // Get unit direction vector
+    auto a = 0.5 * (unit_direction.gety() + 1.0); // Scale y component to [0,1]
+    return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0); // Linearly blend white and blue color
 }
 
 
@@ -33,6 +21,10 @@ color ray_color(const Ray& r) {
 
 
 int main() {
+    hittable_list list; //list of hittable objects
+    list.add(make_shared<sphere>(Vector3D(0, 0, -1), 0.5)); //add a sphere to the list
+    list.add(make_shared<sphere>(Vector3D(0, -100.5, -1), 100)); //add a ground sphere to the list
+
     //Set Up Image Parameters
     double aspect_ratio = 16.0 / 9.0;
     int image_width = 400;
@@ -66,7 +58,7 @@ int main() {
             Vector3D ray_direction = unit_vec(pixel_center - camera_center);
             Ray r(camera_center, ray_direction);
 
-            color pixel_color = ray_color(r);
+            color pixel_color = ray_color(r, list);
             write_color(cout, pixel_color);
         }
     }

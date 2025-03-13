@@ -1,9 +1,9 @@
 #ifndef HITTABLE_LIST
 #define HITTABLE_LIST
 
+#include "utility.h"
 #include "hittable.h"
 
-#include <memory> // for shared_ptr and make_shared
 #include <vector> // for vector
 
 using std::make_shared;

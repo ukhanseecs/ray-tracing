@@ -1,8 +1,8 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
+#include "utility.h"
 #include "hittable.h"
-#include "vec3.h"
 
 // Sphere class that inherits from hittable, represents a 3D sphere object
 class sphere : public hittable {
