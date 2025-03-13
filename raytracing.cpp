@@ -8,36 +8,6 @@ using namespace std;
 #include <cmath>
 #include <iostream>
 
-// Function to calculate intersection of a ray with a sphere
-// Parameters:
-//   sphere_center: center point of the sphere
-//   radius: radius of the sphere
-//   r: the ray to test for intersection
-// Returns: 
-//   t value where ray intersects sphere (negative if no intersection)
-double intersection(const Vector3D sphere_center, double radius, const Ray& r) {
-    // Vector from ray origin to sphere center
-    Vector3D oc = r.getorigin() - sphere_center;
-    
-    // Quadratic formula coefficients
-    // squared length of ray direction vector
-    auto a = r.getdirection().length_squared();
-    // dot product of ray direction and vector to sphere center
-    auto h = dot(r.getdirection(), oc);
-    // length of vector to sphere center squared minus radius squared
-    auto c = oc.length_squared() - radius * radius;
-    
-    // Calculate discriminant to determine number of intersections
-    auto discriminant = h * h - a * c;
-
-    // If discriminant is negative, ray misses sphere
-    if (discriminant < 0) {
-        return -1.0;
-    } else {
-        // Return nearest intersection point using quadratic formula
-        return (h - sqrt(discriminant)) / (a);
-    }
-}
 
 color ray_color(const Ray& r) {
     //check for sphere intersection
