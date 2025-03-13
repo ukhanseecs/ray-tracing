@@ -4,6 +4,8 @@ using namespace std;
 #include "header_files/vec3.h"
 #include "header_files/ray.h"
 #include "header_files/vec3.h"
+#include "header_files/sphere.h"
+#include "header_files/hittable.h"
 
 #include <cmath>
 #include <iostream>
@@ -12,7 +14,7 @@ using namespace std;
 color ray_color(const Ray& r) {
     //check for sphere intersection
     // if t>0, ray hits the sphere
-    auto t = intersection(Vector3D(0, 0, -1), 0.5, r);
+    auto t = hit(Vector3D(0, 0, -1), 0.5, r);
     //calculate the normal and visualize it for when t>0
     if (t > 0.0) {
         Vector3D hit_point = r.point_at_t(t);
