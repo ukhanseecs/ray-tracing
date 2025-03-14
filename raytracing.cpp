@@ -9,14 +9,11 @@ color ray_color(const Ray& r, const hittable& list) {
     hit_record rec; // Record to store intersection information
 
     if (list.hit(r, 0, infinity, rec)) { // If the ray hits an object
-        // display
-        std::cerr << "Hit detected! Normal: "  
-                  << rec.normal.getx() << "," 
-                  << rec.normal.gety() << "," 
-                  << rec.normal.getz() << std::endl;
         // Calculate the color based on the normal at the hit point
         color normal_color = rec.normal + color(1, 1, 1); // Map normal to RGB [0,1]
         return 0.5 * normal_color; // Return normal map color 
+
+        // return color(1,0,0); // Return red color
     }
 
     Vector3D unit_direction = unit_vec(r.getDirection()); // Get unit direction vector
@@ -29,9 +26,11 @@ color ray_color(const Ray& r, const hittable& list) {
 
 
 int main() {
+    // %params:
+    // make z > 1.5 to see the sphere completely
     HittableList list; //list of hittable objects
-    list.add(make_shared<sphere>(Vector3D(0, 0, -1), 0.5)); //add a sphere to the list
-    list.add(make_shared<sphere>(Vector3D(0, -100.5, -1), 100)); //add a ground sphere to the list
+    list.add(make_shared<sphere>(Vector3D(0,100.5, 1), 100));
+    list.add(make_shared<sphere>(Vector3D(0,0, 1.5), 1)); 
 
     //Set Up Image Parameters
     double aspect_ratio = 16.0 / 9.0;
