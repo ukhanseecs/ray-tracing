@@ -4,11 +4,12 @@ using namespace std;
 #include "header_files/sphere.h"
 #include "header_files/hittable.h"
 #include "header_files/hittable_list.h"
+#include "header_files/interval.h"
 
 color ray_color(const Ray& r, const hittable& list) { 
     hit_record rec; // Record to store intersection information
 
-    if (list.hit(r, 0, infinity, rec)) { // If the ray hits an object
+    if (list.hit(r, interval(0, infinity), rec)) { // If the ray hits an object
         // Calculate the color based on the normal at the hit point
         color normal_color = rec.normal + color(1, 1, 1); // Map normal to RGB [0,1]
         return 0.5 * normal_color; // Return normal map color 

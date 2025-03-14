@@ -19,7 +19,7 @@ class sphere : public hittable {
         //   t_min: Minimum acceptable intersection distance
         //   t_max: Maximum acceptable intersection distance
         //   rec: Record to store intersection information
-        bool hit(const Ray& r, double t_min, double t_max, hit_record& rec) const override{
+        bool hit(const Ray& r, interval ray_t, hit_record& rec) const override{
             // Vector from ray origin to sphere center
             Vector3D oc = r.getOrigin() - center;
             
@@ -41,10 +41,11 @@ class sphere : public hittable {
             // Find the nearest root that lies in the acceptable range
             // Try first intersection point
             auto root = (h - sqrtd) / a;
-            if (root < t_min || t_max < root) {
+            if (!ray_t.contains(root)) {
                 // If first intersection is not in range, try second intersection
                 root = (h + sqrtd) / a;
-                if (root < t_min || t_max < root) {
+                // If both intersections are out of range, return false
+                if (!ray_t.contains(root)) {
                     return false;
                 }
             }

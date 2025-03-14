@@ -3,6 +3,7 @@
 
 #include "utility.h"
 #include "hittable.h"
+#include "interval.h"
 
 #include <vector> // for vector
 
@@ -29,13 +30,13 @@ class HittableList : public hittable {
         //   rec: Record to store intersection information
         // Returns: true if ray intersects any object in the list, false otherwise
 
-        bool hit(const Ray& r, double t_min, double t_max, hit_record& rec) const override{
+        bool hit(const Ray& r, interval ray_t, hit_record& rec) const override{
             hit_record temp_rec; // Temporary record to store intersection information
             bool hit_anything = false; // Initialize hit flag to false
-            auto closest_so_far = t_max; // Initialize closest intersection distance to maximum value
+            auto closest_so_far = ray_t.max; // Initialize closest intersection distance to maximum value
 
             for (const auto& object: m_objects){ // Loop through all objects in the list
-                if (object->hit(r, t_min, closest_so_far, temp_rec)){ // If the ray intersects the object
+                if (object->hit(r, interval(ray_t.min, closest_so_far), temp_rec)){ // If the ray intersects the object
                     hit_anything = true; // Set hit flag to true
                     closest_so_far = temp_rec.t; // Update closest intersection distance
                     rec = temp_rec; // Update intersection record

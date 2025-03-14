@@ -2,6 +2,7 @@
 #define HITTABLE_H
 
 #include "utility.h"
+#include "interval.h"
 
 // Class to store information about a ray-object intersection
 class hit_record {
@@ -26,11 +27,10 @@ class hittable {
         // Pure virtual function that determines if a ray hits the object
         // Parameters:
         //   r: The ray to test for intersection
-        //   t_min: Minimum acceptable t value for intersection
-        //   t_max: Maximum acceptable t value for intersection
+        //   ray_t: Interval of valid t values for the ray
         //   rec: Record to store intersection information
         // Returns: true if ray intersects the object, false otherwise
-        virtual bool hit(const Ray& r, double t_min, double t_max, hit_record& rec) const = 0;
+        virtual bool hit(const Ray& r, interval ray_t, hit_record& rec) const = 0;
 };
 
 #endif
