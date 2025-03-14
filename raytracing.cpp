@@ -9,11 +9,14 @@ using namespace std;
 
 
 int main() {
-    // %params:
-    // make z > 1.5 to see the sphere completely
+    // Scene setup
     HittableList list; //list of hittable objects
-    list.add(make_shared<sphere>(Vector3D(0,100.5, 1), 100));
-    list.add(make_shared<sphere>(Vector3D(0,0, 1.5), 1)); 
+    
+    // Ground sphere (large sphere below)
+    list.add(make_shared<sphere>(Vector3D(0,100.5, -1), 100));
+    
+    // Main sphere in view
+    list.add(make_shared<sphere>(Vector3D(0,0, -1), 0.5)); 
 
     camera cam;
 
