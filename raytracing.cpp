@@ -20,12 +20,12 @@ int main() {
     // additional spheres
     list.add(make_shared<sphere>(Vector3D(1,0, -1), 0.5));  // Right sphere
     list.add(make_shared<sphere>(Vector3D(-1,0, -1), 0.5)); // Left sphere
-    
+
 
     camera cam;
 
     cam.aspect_ratio = 16.0/9.0;
     cam.image_width = 400;
-    cam.render(list);
+    cam.render(list, 1000);
     
 }
