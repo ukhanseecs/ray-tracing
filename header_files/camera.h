@@ -16,29 +16,28 @@ class camera {
         Vector3D delta_v;
 
         void initialize() {
-            image_height = static_cast<int>(image_width / aspect_ratio);
+            image_height = int(image_width / aspect_ratio);
             image_height = (image_height < 1) ? 1 : image_height;
-
+    
             center = Vector3D(0, 0, 0);
-
-            //Set Up the Camera Parameters
-            double viewport_height = 2.0;
-            double viewport_width = viewport_height * (static_cast<double>(image_width) / image_height);
-            double focal_length = 1.0;
-                    
-            //Calculate Viewport Boundaries
-            Vector3D viewport_u(viewport_width, 0, 0);
-            Vector3D viewport_v(0, -viewport_height, 0);
-
-                        
-            //Determine Pixel Delta Values
-            this->delta_u = viewport_u / image_width;
-            this->delta_v = viewport_v / image_height;
-
-
-            //Calculate Upper-Left Corner of the Viewport
-            Vector3D viewport_upper_left = center + Vector3D(0, 0, focal_length) - viewport_u/2 - viewport_v/2;
-            this->pixel00_loc = viewport_upper_left + 0.5 * (delta_u + delta_v);
+    
+            // Determine viewport dimensions.
+            auto focal_length = 1.0;
+            auto viewport_height = 2.0;
+            auto viewport_width = viewport_height * (double(image_width)/image_height);
+    
+            // Calculate the vectors across the horizontal and down the vertical viewport edges.
+            auto viewport_u = Vector3D(viewport_width, 0, 0);
+            auto viewport_v = Vector3D(0, -viewport_height, 0);
+    
+            // Calculate the horizontal and vertical delta vectors from pixel to pixel.
+            delta_u = viewport_u / image_width;
+            delta_v = viewport_v / image_height;
+    
+            // Calculate the location of the upper left pixel.
+            auto viewport_upper_left =
+                center - Vector3D(0, 0, focal_length) - viewport_u/2 - viewport_v/2;
+            pixel00_loc = viewport_upper_left + 0.5 * (delta_u + delta_v);
 
         }
 
@@ -57,8 +56,8 @@ class camera {
 
 
     public:
-        double aspect_ratio = 16.0 / 9.0;
-        int image_width = 400;
+        double aspect_ratio = 1.0;
+        int image_width = 100;
 
         void render(const hittable& list){
             initialize();
@@ -69,7 +68,7 @@ class camera {
             for (int j = 0; j < image_height; j++) {
                 for (int i = 0; i < image_width; i++) {
                     Vector3D pixel_center = pixel00_loc + (i * delta_u) + (j * delta_v);
-                    Vector3D ray_direction = unit_vec(pixel_center - center);
+                    Vector3D ray_direction = pixel_center - center;
                     Ray r(center, ray_direction);
 
                     color pixel_color = ray_color(r, list);

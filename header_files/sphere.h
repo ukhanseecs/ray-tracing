@@ -21,11 +21,11 @@ class sphere : public hittable {
         //   rec: Record to store intersection information
         bool hit(const Ray& r, interval ray_t, hit_record& rec) const override{
             // Vector from ray origin to sphere center
-            Vector3D oc = r.getOrigin() - center;
+            Vector3D oc = center - r.getOrigin();
             
             // Calculate quadratic equation coefficients
             auto a = r.getDirection().length_squared();
-            auto h = dot(r.getDirection(), oc);
+            auto h = dot(oc, r.getDirection());
             auto c = oc.length_squared() - radius * radius;
             
             // Calculate discriminant to determine if ray hits sphere

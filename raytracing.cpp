@@ -11,12 +11,16 @@ using namespace std;
 int main() {
     // Scene setup
     HittableList list; //list of hittable objects
-    
     // Ground sphere (large sphere below)
-    list.add(make_shared<sphere>(Vector3D(0,100.5, -1), 100));
+    list.add(make_shared<sphere>(Vector3D(0,-100.5, -1), 100));
     
     // Main sphere in view
-    list.add(make_shared<sphere>(Vector3D(0,0, -1), 0.5)); 
+    list.add(make_shared<sphere>(Vector3D(0,0, -1), 0.5));  // Main sphere
+
+    // additional spheres
+    list.add(make_shared<sphere>(Vector3D(1,0, -1), 0.5));  // Right sphere
+    list.add(make_shared<sphere>(Vector3D(-1,0, -1), 0.5)); // Left sphere
+    
 
     camera cam;
 
