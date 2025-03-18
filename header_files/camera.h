@@ -1,6 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <iostream>
 #include "hittable.h"
 #include "utility.h"
 /*The camera class will be responsible for two important jobs:
@@ -48,12 +49,12 @@ class camera {
         Ray get_ray(int i, int j) const {
             auto offset = sample_square();  // Get a random vector in the square [-0.5, 0.5] x [-0.5, 0.5].
 
-            auto pixel_smaple = pixel00_loc + 
+            auto pixel_sample = pixel00_loc + 
                                 (i + offset.getx()) * delta_u + 
                                 (j + offset.gety()) * delta_v;  // Calculate the location of the pixel
 
             auto ray_origin = center;                       // Camera is at the center
-            auto ray_direction = pixel_smaple - ray_origin; // Calculate the direction of the ray
+            auto ray_direction = pixel_sample - ray_origin; // Calculate the direction of the ray
 
             return Ray(ray_origin, ray_direction);
         }
@@ -68,7 +69,7 @@ class camera {
         color ray_color(const Ray& r, int depth, const hittable& list) const{
             hit_record rec; // Record to store intersection information
 
-            if (list.hit(r, interval(0, infinity), rec)) { // If the ray hits an object
+            if (list.hit(r, interval(0.001, infinity), rec)) { // If the ray hits an object
                 if (depth <= 0) { // If the ray has exceeded the bounce limit, no more light is gathered.
                     return color(0,0,0);
                 }
