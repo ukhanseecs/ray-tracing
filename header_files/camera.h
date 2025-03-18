@@ -65,12 +65,16 @@ class camera {
             return Vector3D(random_double()-0.5, random_double()-0.5, 0); 
         }
 
-        color ray_color(const Ray& r, const hittable& list) const{
+        color ray_color(const Ray& r, int depth, const hittable& list) const{
             hit_record rec; // Record to store intersection information
 
-            if (list.hit(r, interval(0.001, infinity), rec)) { // If the ray hits an object
+            if (list.hit(r, interval(0, infinity), rec)) { // If the ray hits an object
+                if (depth <= 0) { // If the ray has exceeded the bounce limit, no more light is gathered.
+                    return color(0,0,0);
+                }
                 // Calculate the color based on the normal at the hit point
-                return 0.5 * (rec.normal + color(1, 1, 1)); // Return normal map color 
+                Vector3D direction = rec.normal.random_on_hemisphere(rec.normal); // Get random direction on hemisphere
+                return 0.5 * ray_color(Ray(rec.p, direction), depth - 1, list); // Return normal map color 
             }
 
             Vector3D unit_direction = unit_vec(r.getDirection()); // Get unit direction vector
@@ -82,6 +86,7 @@ class camera {
     public:
         double aspect_ratio = 1.0;
         int image_width = 100;
+        int max_depth = 10;
         
 
         void render(const hittable& list, int samples_per_pixel){
@@ -95,7 +100,7 @@ class camera {
                     color pixel_color(0, 0, 0);
                     for (int sample =0 ; sample < samples_per_pixel; sample ++){
                         Ray r = get_ray(i, j);
-                        pixel_color += ray_color(r, list);
+                        pixel_color += ray_color(r,max_depth, list);
                     }
                     write_color(cout, pixel_samples_scale * pixel_color);
                 }
