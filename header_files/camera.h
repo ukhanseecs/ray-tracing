@@ -78,6 +78,8 @@ class camera {
                 // Calculate the color based on the normal at the hit point
                 // Vector3D direction = rec.normal.random_on_hemisphere(rec.normal); // Get random direction on hemisphere
                 Vector3D direction = rec.normal  + Vector3D::random_unit_vector(); // Get random direction on hemisphere
+
+                // this 0.5 factor is used to scale the color to [0,1]
                 return 0.5 * ray_color(Ray(rec.p, direction), depth - 1, list); // Return normal map color 
             }
 
