@@ -4,6 +4,8 @@
 #include <iostream>
 #include "hittable.h"
 #include "utility.h"
+#include "vec3.h"
+
 /*The camera class will be responsible for two important jobs:
 Construct and dispatch rays into the world.
 Use the results of these rays to construct the rendered image. */
@@ -74,7 +76,8 @@ class camera {
                     return color(0,0,0);
                 }
                 // Calculate the color based on the normal at the hit point
-                Vector3D direction = rec.normal.random_on_hemisphere(rec.normal); // Get random direction on hemisphere
+                // Vector3D direction = rec.normal.random_on_hemisphere(rec.normal); // Get random direction on hemisphere
+                Vector3D direction = rec.normal  + Vector3D::random_unit_vector(); // Get random direction on hemisphere
                 return 0.5 * ray_color(Ray(rec.p, direction), depth - 1, list); // Return normal map color 
             }
 

@@ -144,7 +144,7 @@ static Vector3D random(double min, double max) {
     return Vector3D(random_double(min, max), random_double(min, max), random_double(min, max));
 }
 
-Vector3D random_unit_vector() const{
+static Vector3D random_unit_vector() {
     while (true) {
         auto p = Vector3D::random(-1,1);
         auto lensq = p.length_squared();
