@@ -4,6 +4,7 @@
 #include "utility.h"
 #include "hittable.h"
 #include "interval.h"
+#include "aabb.h"
 
 #include <vector> // for vector
 
@@ -12,6 +13,8 @@ using std::shared_ptr;
 
 // Class to store a list of hittable objects
 class HittableList : public hittable { 
+    private:
+        aabb bbox; // Axis-aligned bounding box for the list of objects
     public:
         std::vector<shared_ptr<hittable>> m_objects; // List of hittable objects
 
@@ -20,7 +23,10 @@ class HittableList : public hittable {
 
         void clear() { m_objects.clear(); } // Clear the list of objects
 
-        void add(shared_ptr<hittable> object) { m_objects.push_back(object); } // Add an object to the list
+        void add(shared_ptr<hittable> object) { 
+            m_objects.push_back(object);  // Add an object to the list
+            bbox = aabb(bbox, object->bounding_box()); // Update bounding box
+        } 
 
         // Determine if a ray intersects any object in the list and store the intersection information
         // Parameters:
@@ -45,6 +51,10 @@ class HittableList : public hittable {
 
             return hit_anything; // Return hit flag
         } 
+
+
+        aabb bounding_box() const override { return bbox; } // Get the bounding box of the list
+
 };
 
 #endif
