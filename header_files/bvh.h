@@ -14,7 +14,9 @@ class bvh_node : public hittable {
         // Constructor for building BVH from a list of hittable objects     
         bvh_node(HittableList list) : bvh_node(list.m_objects, 0, list.m_objects.size()) {} 
 
-        bvh_node(std::vector<shared_ptr<hittable>>& objects, size_t start, size_t end) {
+        bvh_node(std::vector<shared_ptr<hittable>>& objects, size_t start, size_t end) {}
+
+        bool hit(const Ray& r, interval ray_t, hit_record& rec) const override {
             if (!bbox.hit(r, ray_t)){
                 return false;
             }
