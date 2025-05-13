@@ -11,17 +11,15 @@ class sphere : public hittable {
         double radius;      // Radius of the sphere
         shared_ptr<material> mat; // Material of the sphere
     public:
-        // Constructor: initializes sphere with center point and radius
-        sphere(const Vector3D& cen, double r) : center(cen), radius(r) {}
+        // Constructor: initializes sphere with center point, radius, and material
+        sphere(const Vector3D& cen, double r, shared_ptr<material> mat) : 
+            center(cen), radius(r), mat(mat) {}
 
 
-
+        //=============================
         // Determines if a ray intersects with the sphere
-        // Parameters:
-        //   r: The ray to test intersection with
-        //   t_min: Minimum acceptable intersection distance
-        //   t_max: Maximum acceptable intersection distance
-        //   rec: Record to store intersection information
+        //==============================
+
         bool hit(const Ray& r, interval ray_t, hit_record& rec) const override{
             // Vector from ray origin to sphere center
             Vector3D oc = center - r.getOrigin();

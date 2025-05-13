@@ -2,6 +2,7 @@
 #define MATERIAL_H
 
 #include "hittable.h"
+#include "vec3.h"
 
 class material {
   public:
@@ -25,7 +26,7 @@ class lambertian : public material {
         bool scatter(const Ray& r_in, const hit_record& rec, color& attenuation, Ray& scattered)
         const override {
             // Generate a random direction on the hemisphere around the normal
-            auto scatter_direction = rec.normal + Vector3D::random_unit_vector();
+            auto scatter_direction = rec.normal + random_unit_vector();
 
             if (scatter_direction.near_zero()) {
                 // If the scatter direction is near zero, use the normal as the scatter direction
@@ -38,6 +39,24 @@ class lambertian : public material {
             return true;
         }
 
+};
+
+
+class metal : public material {
+    private:
+        color albedo; // Albedo (reflective color) of the material
+
+    public:
+        metal(const color& albedo) : albedo(albedo) {}
+
+        bool scatter(const Ray& r_in, const hit_record& rec, color& attenuation, Ray& scattered)
+        const override {
+            Vector3D reflected = reflect(r_in.getDirection(), rec.normal);
+            scattered = Ray(rec.p, reflected);
+            attenuation = albedo;
+            return true;
+        }
+    
 };
 
 #endif

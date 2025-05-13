@@ -5,6 +5,7 @@
 #include "hittable.h"
 #include "utility.h"
 #include "vec3.h"
+#include "material.h"
 
 /*The camera class will be responsible for two important jobs:
 Construct and dispatch rays into the world.
@@ -18,6 +19,12 @@ class camera {
         Vector3D delta_u;
         Vector3D delta_v;
         double pixel_samples_scale; // color scale for pixel samples
+
+
+
+        //============================
+        // Function to initialize the camera
+        //============================
 
         void initialize(int samples_per_pixel) {
             image_height = int(image_width / aspect_ratio);
@@ -47,7 +54,11 @@ class camera {
         }
 
 
-        // Function to get the ray for a given pixel
+        //============================
+        // function to get a ray from the camera
+        //============================
+
+
         Ray get_ray(int i, int j) const {
             auto offset = sample_square();  // Get a random vector in the square [-0.5, 0.5] x [-0.5, 0.5].
 
@@ -61,12 +72,26 @@ class camera {
             return Ray(ray_origin, ray_direction);
         }
 
+
+
+        //============================
         // Function to return a random vector in the square [-0.5, 0.5] x [-0.5, 0.5].
         // This is used to sample the pixel area for antialiasing.
+        //============================
+
+
+
         Vector3D sample_square() const{
             // Return a random vector in the square [-0.5, 0.5] x [-0.5, 0.5].
             return Vector3D(random_double()-0.5, random_double()-0.5, 0); 
         }
+
+
+
+        //============================
+        // Function to return the color of the ray
+        //=============================
+
 
         color ray_color(const Ray& r, int depth, const hittable& list) const{
             hit_record rec; // Record to store intersection information
@@ -75,9 +100,17 @@ class camera {
                 if (depth <= 0) { // If the ray has exceeded the bounce limit, no more light is gathered.
                     return color(0,0,0);
                 }
+
+                Ray scattered; // Ray to store the scattered ray
+                color attenuation; // Color to store the attenuation
+                if (rec.mat->scatter(r, rec, attenuation, scattered)) { // If the material scatters the ray
+                    return attenuation * ray_color(scattered, depth - 1, list); // Return the color of the scattered ray
+                return color(0,0,0); // If the material does not scatter, return black
+                }
+
+
                 // Calculate the color based on the normal at the hit point
-                // Vector3D direction = rec.normal.random_on_hemisphere(rec.normal); // Get random direction on hemisphere
-                Vector3D direction = rec.normal  + Vector3D::random_unit_vector(); // Get random direction on hemisphere
+                Vector3D direction = rec.normal  + random_unit_vector(); // Get random direction on hemisphere
 
                 // this 0.5 factor is used to scale the color to [0,1]
                 return 0.5 * ray_color(Ray(rec.p, direction), depth - 1, list); // Return normal map color 
