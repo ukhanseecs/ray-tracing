@@ -19,6 +19,8 @@ class camera {
         Vector3D delta_u;
         Vector3D delta_v;
         Vector3D u, v, w; // camera frame basis vectors
+        Vector3D defocus_disk_u;
+        Vector3D defocus_disk_v;
         double pixel_samples_scale; // color scale for pixel samples
         
 
@@ -36,10 +38,9 @@ class camera {
             center = lookfrom;
     
             // Determine viewport dimensions.
-            auto focal_length = (lookfrom - lookat).length(); // Distance from camera to viewport
             auto theta = degrees_to_radians(vfov);
             auto h = tan(theta / 2);
-            auto viewport_height = 2*h*focal_length;
+            auto viewport_height = 2 *h* focus_dist;
             auto viewport_width = viewport_height * (double(image_width)/image_height);
     
 
@@ -63,8 +64,13 @@ class camera {
             // Calculate the location of the upper left pixel.
             // auto viewport_upper_left =
             //     center - Vector3D(0, 0, focal_length) - viewport_u/2 - viewport_v/2;
-            auto viewport_upper_left = center - w * focal_length - 0.5 * (viewport_u + viewport_v);
+            auto viewport_upper_left = center - w * focus_dist - 0.5 * (viewport_u + viewport_v);
             pixel00_loc = viewport_upper_left + 0.5 * (delta_u + delta_v);
+
+
+            auto defocus_radius = focus_dist * tan(degrees_to_radians(defocus_angle) / 2);
+            defocus_disk_u = defocus_radius * u; // radius of the defocus disk in world space
+            defocus_disk_v = defocus_radius * v; // radius of the defocus disk in world space
 
         }
 
@@ -81,7 +87,7 @@ class camera {
                                 (i + offset.getx()) * delta_u + 
                                 (j + offset.gety()) * delta_v;  // Calculate the location of the pixel
 
-            auto ray_origin = center;                       // Camera is at the center
+            auto ray_origin = (defocus_angle <= 0) ? center : defocus_disk_sample();  // Camera is at the center
             auto ray_direction = pixel_sample - ray_origin; // Calculate the direction of the ray
 
             return Ray(ray_origin, ray_direction);
@@ -101,6 +107,12 @@ class camera {
             return Vector3D(random_double()-0.5, random_double()-0.5, 0); 
         }
 
+
+        Vector3D defocus_disk_sample() const{
+            // Return a random point in the defocus disk
+            auto p = random_in_unit_disk();
+            return center + (p[0]*defocus_disk_u) + (p[1]*defocus_disk_v); // Calculate the point in the disk
+        }
 
 
         //============================
@@ -146,6 +158,9 @@ class camera {
         Vector3D lookfrom = Vector3D(0, 0, 0); // Camera position
         Vector3D lookat = Vector3D(0, 0, -1); // Point to look at
         Vector3D vup = Vector3D(0, 1, 0); // Up vector for the camera
+
+        double defocus_angle = 0.0; // Defocus angle for depth of field
+        double focus_dist = 10; // Focus distance for depth of field
         
 
         void render(const hittable& list, int samples_per_pixel){
