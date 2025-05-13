@@ -81,10 +81,19 @@ class dielectric : public material {
             double refraction_ratio = rec.front_face ? (1.0 / refractive_index) : refractive_index;
 
             Vector3D unit_direction = unit_vec(r_in.getDirection());
-            // Calculate the cosine of the angle between the incoming ray, the normal and the refracted ray
-            Vector3D refracted = refract(unit_direction, rec.normal, refraction_ratio);
+            double cos_theta = fmin(dot(-unit_direction, rec.normal), 1.0);
+            double sin_theta = sqrt(1.0 - cos_theta * cos_theta);
 
-            scattered = Ray(rec.p, refracted);
+            bool cannot_refract = refraction_ratio * sin_theta > 1.0;
+            Vector3D direction;
+
+            if (cannot_refract) {
+                direction = reflect(unit_direction, rec.normal);
+            } else {
+                // Refract the ray
+                direction = refract(unit_direction, rec.normal, refraction_ratio);
+            }
+            scattered = Ray(rec.p, direction);
             return true;
         }
 

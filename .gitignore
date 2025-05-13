@@ -7,3 +7,5 @@ testvec3.exe
 *.o
 output.ppm
 raytracing.o
+raytracing.o
+output.ppm
