@@ -4,12 +4,15 @@
 #include "utility.h"
 #include "interval.h"
 
+class material;
+
 // Class to store information about a ray-object intersection
 class hit_record {
     public:
         Vector3D p;      // Point of intersection
         Vector3D normal; // Surface normal at intersection point
         double t;        // Parameter t along the ray where intersection occurs
+        shared_ptr<material> mat; // Pointer to the material of the object
         bool front_face; // True if ray intersects front face of object
         // Set the normal and front_face values based on the ray and outward normal
         void set_face_normal(const Ray& r, const Vector3D& outward_normal) {

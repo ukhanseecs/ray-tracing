@@ -9,9 +9,12 @@ class sphere : public hittable {
     private:
         Vector3D center;    // Center point of the sphere
         double radius;      // Radius of the sphere
+        shared_ptr<material> mat; // Material of the sphere
     public:
         // Constructor: initializes sphere with center point and radius
         sphere(const Vector3D& cen, double r) : center(cen), radius(r) {}
+
+
 
         // Determines if a ray intersects with the sphere
         // Parameters:
@@ -55,6 +58,7 @@ class sphere : public hittable {
             rec.p = r.point_at_t(rec.t);       // Calculate intersection point
             Vector3D normal = (rec.p - center) / radius; // Calculate normal
             rec.set_face_normal(r, normal); // Set front face normal
+            rec.mat = mat; // Set material pointer
 
             return true;
         }
