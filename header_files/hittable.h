@@ -3,6 +3,7 @@
 
 #include "utility.h"
 #include "interval.h"
+#include "aabb.h"
 
 class material;
 
@@ -34,6 +35,8 @@ class hittable {
         //   rec: Record to store intersection information
         // Returns: true if ray intersects the object, false otherwise
         virtual bool hit(const Ray& r, interval ray_t, hit_record& rec) const = 0;
+
+        virtual aabb bounding_box() const = 0; // Get the bounding box of the object
 };
 
 #endif
