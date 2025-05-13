@@ -25,6 +25,11 @@ class interval {
             return x;   
         }
 
+        interval expand(double delta) const {
+            auto padding = delta /2 ;       // Calculate padding
+            return interval(min - padding, max + padding);    // Expand the interval by delta
+        }
+
         static const interval empty; // Empty interval
         static const interval infinite; // Infinite interval
 };

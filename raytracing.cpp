@@ -86,8 +86,8 @@ int main() {
     camera cam;
 
     cam.aspect_ratio = 16.0 / 9.0; // Aspect ratio of the image
-    cam.image_width = 1200;
-    cam.samples_per_pixel = 500; // Number of samples per pixel
+    cam.image_width = 400;
+    cam.samples_per_pixel = 50; // Number of samples per pixel
     cam.max_depth = 50; // Maximum recursion depth for ray tracing
 
     cam.vfov= 20;
@@ -116,7 +116,7 @@ int main() {
     // cam.focus_dist = 3.4;
 
     auto start = std::chrono::high_resolution_clock::now(); // Start time measurement
-    cam.render(list, 100);
+    cam.render(list, 50);
     auto end = std::chrono::high_resolution_clock::now(); // End time measurement
     std::chrono::duration<double> elapsed = end - start; // Calculate elapsed time
     std::cout << "Elapsed time: " << elapsed.count() << " seconds\n"; // Print elapsed time
