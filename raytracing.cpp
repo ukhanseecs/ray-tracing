@@ -93,7 +93,7 @@ int main() {
     cam.vfov= 20;
     cam.lookfrom = Vector3D(13, 2, 3); // Camera position
     cam.lookat = Vector3D(0, 0, 0); // Point to look at
-    cam.vup = Vector3D(0, 1, 0); // Up vector for the camera
+    cam.vup = Vector3D(0, -1, 0); // Up vector for the camera
 
     cam.defocus_angle = 0.6; // Defocus angle for depth of field
     cam.focus_dist = 10.0; // Focus distance for depth of field
