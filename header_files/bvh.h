@@ -11,7 +11,7 @@ class bvh_node : public hittable {
     private:
         shared_ptr<hittable> left; // Pointer to the left child node
         shared_ptr<hittable> right; // Pointer to the right child node
-        aabb box; // Axis-aligned bounding box for the node
+        aabb bbox; // Axis-aligned bounding box for the node
 
         static bool box_compare(
             const shared_ptr<hittable>& a, const shared_ptr<hittable>& b, int axis) {
@@ -74,7 +74,7 @@ class bvh_node : public hittable {
             return hit_left || hit_right; // Return true if either child hit
         }
 
-        aabb bounding_box() const override { return box; } // Get the bounding box of the node
+        aabb bounding_box() const override { return bbox; } // Get the bounding box of the node
 };
 
 #endif 

@@ -93,7 +93,6 @@ int main() {
 
     list = HittableList(make_shared<bvh_node>(list));
 
-
     camera cam;
 
     cam.aspect_ratio = 16.0 / 9.0; // Aspect ratio of the image
