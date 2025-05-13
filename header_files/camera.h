@@ -108,6 +108,10 @@ class camera {
         }
 
 
+        //============================
+        // Function to return a random point in the defocus disk
+        //============================
+
         Vector3D defocus_disk_sample() const{
             // Return a random point in the defocus disk
             auto p = random_in_unit_disk();
