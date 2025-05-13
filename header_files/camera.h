@@ -18,7 +18,9 @@ class camera {
         Vector3D pixel00_loc;
         Vector3D delta_u;
         Vector3D delta_v;
+        Vector3D u, v, w; // camera frame basis vectors
         double pixel_samples_scale; // color scale for pixel samples
+        
 
 
 
@@ -31,26 +33,37 @@ class camera {
             image_height = (image_height < 1) ? 1 : image_height;
             pixel_samples_scale = 1.0 / samples_per_pixel;
     
-            center = Vector3D(0, 0, 0);
+            center = lookfrom;
     
             // Determine viewport dimensions.
-            auto focal_length = 1.0;
+            auto focal_length = (lookfrom - lookat).length(); // Distance from camera to viewport
             auto theta = degrees_to_radians(vfov);
             auto h = tan(theta / 2);
             auto viewport_height = 2*h*focal_length;
             auto viewport_width = viewport_height * (double(image_width)/image_height);
     
+
+            // Calculate the camera frame basis vectors.
+            w = unit_vec(lookfrom - lookat); // w is the direction from camera to viewport
+            u = unit_vec(cross(vup, w)); // u is the right direction
+            v = cross(w, u); // v is the up direction
+
+            
             // Calculate the vectors across the horizontal and down the vertical viewport edges.
-            auto viewport_u = Vector3D(viewport_width, 0, 0);
-            auto viewport_v = Vector3D(0, -viewport_height, 0);
-    
+            // auto viewport_u = Vector3D(viewport_width, 0, 0);
+            // auto viewport_v = Vector3D(0, -viewport_height, 0);
+            auto viewport_u = viewport_width * u; // width of the viewport in world space
+            auto viewport_v = viewport_height * v; // height of the viewport in world space
+
+
             // Calculate the horizontal and vertical delta vectors from pixel to pixel.
             delta_u = viewport_u / image_width;
             delta_v = viewport_v / image_height;
     
             // Calculate the location of the upper left pixel.
-            auto viewport_upper_left =
-                center - Vector3D(0, 0, focal_length) - viewport_u/2 - viewport_v/2;
+            // auto viewport_upper_left =
+            //     center - Vector3D(0, 0, focal_length) - viewport_u/2 - viewport_v/2;
+            auto viewport_upper_left = center - w * focal_length - 0.5 * (viewport_u + viewport_v);
             pixel00_loc = viewport_upper_left + 0.5 * (delta_u + delta_v);
 
         }
@@ -130,6 +143,9 @@ class camera {
         int max_depth = 10;
 
         double vfov = 90; // Vertical field of view in degrees
+        Vector3D lookfrom = Vector3D(0, 0, 0); // Camera position
+        Vector3D lookat = Vector3D(0, 0, -1); // Point to look at
+        Vector3D vup = Vector3D(0, 1, 0); // Up vector for the camera
         
 
         void render(const hittable& list, int samples_per_pixel){
