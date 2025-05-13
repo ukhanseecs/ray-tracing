@@ -45,16 +45,24 @@ class lambertian : public material {
 class metal : public material {
     private:
         color albedo; // Albedo (reflective color) of the material
+        double fuzz;  // Fuzziness factor for the metal material
 
     public:
-        metal(const color& albedo) : albedo(albedo) {}
+        metal(const color& albedo, double fuzz) 
+            : albedo(albedo), fuzz(fuzz < 1 ? fuzz :1) {}
 
         bool scatter(const Ray& r_in, const hit_record& rec, color& attenuation, Ray& scattered)
         const override {
+            // Reflect the incoming ray direction around the normal
             Vector3D reflected = reflect(r_in.getDirection(), rec.normal);
+            // Add fuzziness to the reflected direction
+            reflected = unit_vec(reflected) + (fuzz * random_unit_vector());
+            // Create a new ray with the reflected direction
             scattered = Ray(rec.p, reflected);
+            // Set the attenuation color
             attenuation = albedo;
-            return true;
+            // Check if the scattered ray is in the same hemisphere as the normal
+            return (dot(scattered.getDirection(), rec.normal) > 0); 
         }
     
 };
