@@ -13,11 +13,11 @@ class sphere : public hittable {
         aabb bbox;   // 
     public:
         // Constructor: initializes sphere with center point, radius, and material
-        sphere(const Vector3D& cen, double r, shared_ptr<material> mat) 
-            : center(Vector3D(0,0,0)), radius(std::fmax(0,radius)), mat(mat)
+        sphere(const Vector3D& static_center, double r, shared_ptr<material> mat) 
+            : center(static_center, Vector3D(0,0,0)), radius(std::fmax(0,r)), mat(mat)
             {
                 auto rvec = Vector3D(radius, radius, radius);
-                bbox = aabb(cen - rvec, cen + rvec);
+                bbox = aabb(static_center - rvec, static_center + rvec);
             }
 
         aabb bounding_box() const override { return bbox; }

@@ -16,48 +16,47 @@ int main() {
     // Scene setup
     HittableList list; //list of hittable objects
 
-    // auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
-    // list.add(make_shared<sphere>(Vector3D(0,-1000,0), 1000, ground_material));
+    auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
+    list.add(make_shared<sphere>(Vector3D(0,-1000,0), 1000, ground_material));
 
-    // for (int a= -11; a < 11; a++){
-    //     for (int b= -11; b < 11; b++){
-    //         auto choose_mat = random_double();
-    //         Vector3D center(a + 0.9*random_double(), 0.2, b + 0.9*random_double());
+    for (int a= -11; a < 11; a++){
+        for (int b= -11; b < 11; b++){
+            auto choose_mat = random_double();
+            Vector3D center(a + 0.9*random_double(), 0.2, b + 0.9*random_double());
 
-    //         if ((center - Vector3D(4, 0.2, 0)).length() > 0.9){
-    //             shared_ptr<material> sphere_material;
+            if ((center - Vector3D(4, 0.2, 0)).length() > 0.9){
+                shared_ptr<material> sphere_material;
 
-    //             if (choose_mat < 0.8){
-    //                 // diffuse
-    //                 auto albedo = color::random() * color::random();
-    //                 sphere_material = make_shared<lambertian>(albedo);
-    //                 list.add(make_shared<sphere>(center, 0.2, sphere_material));
-    //             } else if (choose_mat < 0.95) {
-    //                 //metal 
-    //                 auto albedo = color::random(0.5, 1);
-    //                 auto fuzz = random_double(0, 0.5);
-    //                 sphere_material = make_shared<metal>(albedo, fuzz);
-    //                 list.add(make_shared<sphere>(center, 0.2, sphere_material));
-    //             } else {
-    //                 // glass
-    //                 sphere_material = make_shared<dielectric>(1.5);
-    //                 list.add(make_shared<sphere>(center, 0.2, sphere_material));
-    //             }
-    //         }
-    //     }
-    // }
+                if (choose_mat < 0.8){
+                    // diffuse
+                    auto albedo = color::random() * color::random();
+                    sphere_material = make_shared<lambertian>(albedo);
+                    list.add(make_shared<sphere>(center, 0.2, sphere_material));
+                } else if (choose_mat < 0.95) {
+                    //metal 
+                    auto albedo = color::random(0.5, 1);
+                    auto fuzz = random_double(0, 0.5);
+                    sphere_material = make_shared<metal>(albedo, fuzz);
+                    list.add(make_shared<sphere>(center, 0.2, sphere_material));
+                } else {
+                    // glass
+                    sphere_material = make_shared<dielectric>(1.5);
+                    list.add(make_shared<sphere>(center, 0.2, sphere_material));
+                }
+            }
+        }
+    }
 
-    // auto material1 = make_shared<dielectric>(1.5);
-    // list.add(make_shared<sphere>(Vector3D(0, 1, 0), 1.0, material1));
+    auto material1 = make_shared<dielectric>(1.5);
+    list.add(make_shared<sphere>(Vector3D(0, 1, 0), 1.0, material1));
 
-    // auto material2 = make_shared<lambertian>(color(0.4, 0.2, 0.1));
-    // list.add(make_shared<sphere>(Vector3D(-4, 1, 0), 1.0, material2));
+    auto material2 = make_shared<lambertian>(color(0.4, 0.2, 0.1));
+    list.add(make_shared<sphere>(Vector3D(-4, 1, 0), 1.0, material2));
 
-    // auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
-    // list.add(make_shared<sphere>(Vector3D(4, 1, 0), 1.0, material3));
+    auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
+    list.add(make_shared<sphere>(Vector3D(4, 1, 0), 1.0, material3));
 
-////////////////////////////////////////////////////////////////////////////////////
-
+    list = HittableList(make_shared<bvh_node>(list));
 
     // // Materials
     // auto material_ground = make_shared<lambertian>(color(0.8, 0.8, 0.0));
@@ -85,19 +84,13 @@ int main() {
     // // list.add(make_shared<sphere>(Vector3D(R, 0, -1), R, material_right));
 
 
-    auto material2 = make_shared<lambertian>(color(0.4, 0.2, 0.1));
-    list.add(make_shared<sphere>(Vector3D(-4, 1, 0), 1.0, material2));
 
-    auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
-    list.add(make_shared<sphere>(Vector3D(4, 1, 0), 1.0, material3));
-
-    list = HittableList(make_shared<bvh_node>(list));
 
     camera cam;
 
     cam.aspect_ratio = 16.0 / 9.0; // Aspect ratio of the image
     cam.image_width = 400;
-    cam.samples_per_pixel = 50; // Number of samples per pixel
+    cam.samples_per_pixel = 100; // Number of samples per pixel
     cam.max_depth = 50; // Maximum recursion depth for ray tracing
 
     cam.vfov= 20;
@@ -126,7 +119,7 @@ int main() {
     // cam.focus_dist = 3.4;
 
     auto start = std::chrono::high_resolution_clock::now(); // Start time measurement
-    cam.render(list, 50);
+    cam.render(list, 100);
     auto end = std::chrono::high_resolution_clock::now(); // End time measurement
     std::chrono::duration<double> elapsed = end - start; // Calculate elapsed time
     std::cout << "Elapsed time: " << elapsed.count() << " seconds\n"; // Print elapsed time
