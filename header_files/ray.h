@@ -11,16 +11,17 @@ class Ray {
     private:
         Vector3D origin;    // Starting point of the ray
         Vector3D direction; // Direction vector of the ray
+        double tm;      
     public:
         // Default constructor
         Ray() : origin(Vector3D(0, 0, 0)), direction(Vector3D(0, 0, 0)) {}
 
-        /**
-         * @brief Construct a ray with given origin and direction
-         * @param origin Starting point of the ray
-         * @param direction Direction vector of the ray
-         */
-        Ray(const Vector3D& origin, const Vector3D& direction) : origin(origin), direction(direction) {}
+        Ray(const Vector3D& origin, const Vector3D& direction, double time) 
+            : origin(origin), direction(direction), tm(time) {}
+
+            
+        Ray(const Vector3D& origin, const Vector3D& direction) 
+        : Ray(origin, direction, 0) {}
 
         /**
          * @brief Calculate a point along the ray at parameter t
@@ -34,6 +35,8 @@ class Ray {
         // Getter methods
         const Vector3D& getOrigin() const { return origin; }
         const Vector3D getDirection() const { return direction; }
+
+        double time() const { return tm;}
 
 };
 

@@ -31,7 +31,8 @@ int main() {
                     // diffuse
                     auto albedo = color::random() * color::random();
                     sphere_material = make_shared<lambertian>(albedo);
-                    list.add(make_shared<sphere>(center, 0.2, sphere_material));
+                    auto center2 = center + Vector3D(0, random_double(0.5), 0);
+                    list.add(make_shared<sphere>(center, center2, 0.2, sphere_material));
                 } else if (choose_mat < 0.95) {
                     //metal 
                     auto albedo = color::random(0.5, 1);
@@ -47,16 +48,16 @@ int main() {
         }
     }
 
-    auto material1 = make_shared<dielectric>(1.5);
-    list.add(make_shared<sphere>(Vector3D(0, 1, 0), 1.0, material1));
+    // auto material1 = make_shared<dielectric>(1.5);
+    // list.add(make_shared<sphere>(Vector3D(0, 1, 0), 1.0, material1));
 
-    auto material2 = make_shared<lambertian>(color(0.4, 0.2, 0.1));
-    list.add(make_shared<sphere>(Vector3D(-4, 1, 0), 1.0, material2));
+    // auto material2 = make_shared<lambertian>(color(0.4, 0.2, 0.1));
+    // list.add(make_shared<sphere>(Vector3D(-4, 1, 0), 1.0, material2));
 
-    auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
-    list.add(make_shared<sphere>(Vector3D(4, 1, 0), 1.0, material3));
+    // auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
+    // list.add(make_shared<sphere>(Vector3D(4, 1, 0), 1.0, material3));
 
-    list = HittableList(make_shared<bvh_node>(list));
+    // list = HittableList(make_shared<bvh_node>(list));
 
     // // Materials
     // auto material_ground = make_shared<lambertian>(color(0.8, 0.8, 0.0));
@@ -88,18 +89,20 @@ int main() {
 
     camera cam;
 
-    cam.aspect_ratio = 16.0 / 9.0; // Aspect ratio of the image
-    cam.image_width = 400;
-    cam.samples_per_pixel = 100; // Number of samples per pixel
-    cam.max_depth = 50; // Maximum recursion depth for ray tracing
+    // cam.aspect_ratio = 16.0 / 9.0; // Aspect ratio of the image
+    // cam.image_width = 400;
+    // cam.samples_per_pixel = 100; // Number of samples per pixel
+    // cam.max_depth = 50; // Maximum recursion depth for ray tracing
 
-    cam.vfov= 20;
-    cam.lookfrom = Vector3D(13, 2, 3); // Camera position
-    cam.lookat = Vector3D(0, 0, 0); // Point to look at
-    cam.vup = Vector3D(0, -1, 0); // Up vector for the camera
+    // cam.vfov= 20;
+    // cam.lookfrom = Vector3D(13, 2, 3); // Camera position
+    // cam.lookat = Vector3D(0, 0, 0); // Point to look at
+    // cam.vup = Vector3D(0, -1, 0); // Up vector for the camera
 
-    cam.defocus_angle = 0.6; // Defocus angle for depth of field
-    cam.focus_dist = 10.0; // Focus distance for depth of field
+    // cam.defocus_angle = 0.6; // Defocus angle for depth of field
+    // cam.focus_dist = 10.0; // Focus distance for depth of field
+
+//////////////////////////////====================================
 
     // cam.aspect_ratio = 16.0/9.0;
     // cam.image_width = 400;
@@ -117,6 +120,22 @@ int main() {
 
     // cam.defocus_angle = 10.0;
     // cam.focus_dist = 3.4;
+
+
+
+    cam.aspect_ratio      = 16.0 / 9.0;
+    cam.image_width       = 400;
+    cam.samples_per_pixel = 100;
+    cam.max_depth         = 50;
+
+    cam.vfov     = 20;
+    cam.lookfrom = Vector3D(13,2,3);
+    cam.lookat   = Vector3D(0,0,0);
+    cam.vup      = Vector3D(0,-1,0);
+
+    cam.defocus_angle = 0.6;
+    cam.focus_dist    = 10.0;
+
 
     auto start = std::chrono::high_resolution_clock::now(); // Start time measurement
     cam.render(list, 100);

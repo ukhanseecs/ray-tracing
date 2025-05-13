@@ -34,7 +34,7 @@ class lambertian : public material {
             }
 
             // Create a new ray with the scatter direction and set the attenuation color
-            scattered = Ray(rec.p, scatter_direction);
+            scattered = Ray(rec.p, scatter_direction, r_in.time());
             attenuation = albedo;
             return true;
         }
@@ -58,7 +58,7 @@ class metal : public material {
             // Add fuzziness to the reflected direction
             reflected = unit_vec(reflected) + (fuzz * random_unit_vector());
             // Create a new ray with the reflected direction
-            scattered = Ray(rec.p, reflected);
+            scattered = Ray(rec.p, reflected, r_in.time());
             // Set the attenuation color
             attenuation = albedo;
             // Check if the scattered ray is in the same hemisphere as the normal
@@ -100,7 +100,7 @@ class dielectric : public material {
                 // Refract the ray
                 direction = refract(unit_direction, rec.normal, refraction_ratio);
             }
-            scattered = Ray(rec.p, direction);
+            scattered = Ray(rec.p, direction, r_in.time());
             return true;
         }
 
