@@ -8,6 +8,8 @@ using namespace std;
 #include "header_files/camera.h"  
 #include "header_files/material.h"
 
+#include <chrono>
+
 
 int main() {
     // Scene setup
@@ -113,7 +115,9 @@ int main() {
     // cam.defocus_angle = 10.0;
     // cam.focus_dist = 3.4;
 
+    auto start = std::chrono::high_resolution_clock::now(); // Start time measurement
     cam.render(list, 100);
-    
-
+    auto end = std::chrono::high_resolution_clock::now(); // End time measurement
+    std::chrono::duration<double> elapsed = end - start; // Calculate elapsed time
+    std::cout << "Elapsed time: " << elapsed.count() << " seconds\n"; // Print elapsed time
 }
