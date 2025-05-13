@@ -30,7 +30,7 @@ class camera {
         // Function to initialize the camera
         //============================
 
-        void initialize(int samples_per_pixel) {
+        void initialize() {
             image_height = int(image_width / aspect_ratio);
             image_height = (image_height < 1) ? 1 : image_height;
             pixel_samples_scale = 1.0 / samples_per_pixel;
@@ -156,6 +156,7 @@ class camera {
     public:
         double aspect_ratio = 1.0;
         int image_width = 100;
+        int samples_per_pixel; // number of samples per pixel
         int max_depth = 10;
 
         double vfov = 90; // Vertical field of view in degrees
@@ -168,7 +169,7 @@ class camera {
         
 
         void render(const hittable& list, int samples_per_pixel){
-            initialize(samples_per_pixel);
+            initialize();
 
             // Render
             cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
