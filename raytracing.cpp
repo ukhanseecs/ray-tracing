@@ -50,7 +50,7 @@ int main() {
 
     // lookfrom
     // - or + x, 2, 1 to flip horizontally
-    cam.lookfrom = Vector3D(-2,2,1);
+    cam.lookfrom = Vector3D(2,2,1);
     cam.lookat   = Vector3D(0,0,-1);
 
     // vup
