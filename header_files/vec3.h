@@ -162,6 +162,10 @@ Vector3D random_on_hemisphere(const Vector3D& normal) const{
         return -on_unit_sphere;
 };
 
+bool near_zero() const{
+    // Return true if the vector is close to zero
+    const auto s = 1e-8;
+    return (fabs(vec[0]) < s) && (fabs(vec[1]) < s) && (fabs(vec[2]) < s);
 };
 
 #endif
