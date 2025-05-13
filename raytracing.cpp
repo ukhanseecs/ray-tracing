@@ -31,7 +31,7 @@ int main() {
                     // diffuse
                     auto albedo = color::random() * color::random();
                     sphere_material = make_shared<lambertian>(albedo);
-                    auto center2 = center + Vector3D(0, random_double(0.5), 0);
+                    auto center2 = center + Vector3D(0, random_double(0,0.5), 0);
                     list.add(make_shared<sphere>(center, center2, 0.2, sphere_material));
                 } else if (choose_mat < 0.95) {
                     //metal 

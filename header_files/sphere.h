@@ -34,7 +34,7 @@ class sphere : public hittable {
 
         bool hit(const Ray& r, interval ray_t, hit_record& rec) const override{
             // Vector from ray origin to sphere center
-            Vector3D current_center = center.at(r.time());
+            Vector3D current_center = center.point_at_t(r.time());
             Vector3D oc = current_center - r.getOrigin();
             
             // Calculate quadratic equation coefficients
@@ -68,7 +68,7 @@ class sphere : public hittable {
             rec.t = root;                       // Record intersection distance
             rec.p = r.point_at_t(rec.t);       // Calculate intersection point
             Vector3D outward_normal = (rec.p - current_center) / radius; // Calculate normal
-            rec.set_face_normal(r, normal); // Set front face normal
+            rec.set_face_normal(r, outward_normal); // Set front face normal
             rec.mat = mat; // Set material pointer
 
             return true;
