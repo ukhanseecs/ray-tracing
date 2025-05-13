@@ -71,6 +71,13 @@ class metal : public material {
 class dielectric : public material {
     private:
         double refractive_index;
+
+        // Calculate the reflectance using Schlick's approximation
+        static double reflectance(double cosine, double ref_idx) {
+            auto r0 = (1 - ref_idx) / (1 + ref_idx);
+            r0 = r0 * r0;
+            return r0 + (1 - r0) * pow((1 - cosine), 5);
+        }
     public:
         dielectric(double refractive_index) : refractive_index(refractive_index) {}
 
@@ -87,7 +94,7 @@ class dielectric : public material {
             bool cannot_refract = refraction_ratio * sin_theta > 1.0;
             Vector3D direction;
 
-            if (cannot_refract) {
+            if (cannot_refract || reflectance(cos_theta, refraction_ratio)> random_double()) {
                 direction = reflect(unit_direction, rec.normal);
             } else {
                 // Refract the ray
