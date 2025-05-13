@@ -10,6 +10,25 @@ class bvh_node : public hittable {
         shared_ptr<hittable> left; // Pointer to the left child node
         shared_ptr<hittable> right; // Pointer to the right child node
         aabb box; // Axis-aligned bounding box for the node
+
+        static bool box_compare(
+            const shared_ptr<hittable>& a, const shared_ptr<hittable>& b, int axis) {
+                auto a_axis_interval = a-->bounding_box().axis_interval(axis);
+                auto b_axis_interval = b-->bounding_box().axis_interval(axis);
+                return a_axis_interval.min < b_axis_interval.min;
+            }
+
+        static bool box_x_compare (const shared_ptr<hittable> a, const shared_ptr<hittable> b){
+            return (a, b, 0);
+        }
+        
+        static bool box_y_compare (const shared_ptr<hittable> a, const shared_ptr<hittable> b){
+            return (a, b, 1);
+        }
+        
+        static bool box_z_compare (const shared_ptr<hittable> a, const shared_ptr<hittable> b){
+            return (a, b, 2);
+        }
     public:
         // Constructor for building BVH from a list of hittable objects     
         bvh_node(HittableList list) : bvh_node(list.m_objects, 0, list.m_objects.size()) {} 
