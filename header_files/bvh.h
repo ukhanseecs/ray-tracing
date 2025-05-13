@@ -19,10 +19,11 @@ class bvh_node : public hittable {
                 return false;
             }
 
-            bool hit_left = left->hit(r, ray_t, rec);
+            bool hit_left = left->hit(r, ray_t, rec); // Check if left child hit
+            // If left child hit, check right child with updated ray_t
             bool hit_right = right->hit(r, interval(ray_t.min, hit_left ? rec.t : ray_t.max), rec);
 
-            return hit_left || hit_right;
+            return hit_left || hit_right; // Return true if either child hit
         }
 
         aabb bounding_box() const override { return box; } // Get the bounding box of the node
