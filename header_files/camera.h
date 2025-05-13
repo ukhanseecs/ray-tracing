@@ -35,7 +35,9 @@ class camera {
     
             // Determine viewport dimensions.
             auto focal_length = 1.0;
-            auto viewport_height = 2.0;
+            auto theta = degrees_to_radians(vfov);
+            auto h = tan(theta / 2);
+            auto viewport_height = 2*h*focal_length;
             auto viewport_width = viewport_height * (double(image_width)/image_height);
     
             // Calculate the vectors across the horizontal and down the vertical viewport edges.
@@ -112,7 +114,7 @@ class camera {
                 // Calculate the color based on the normal at the hit point
                 Vector3D direction = rec.normal  + random_unit_vector(); // Get random direction on hemisphere
 
-                // this 0.5 factor is used to scale the color to [0,1]
+                // this 0.5 factor is use   d to scale the color to [0,1]
                 return 0.5 * ray_color(Ray(rec.p, direction), depth - 1, list); // Return normal map color 
             }
 
@@ -126,6 +128,8 @@ class camera {
         double aspect_ratio = 1.0;
         int image_width = 100;
         int max_depth = 10;
+
+        double vfov = 90; // Vertical field of view in degrees
         
 
         void render(const hittable& list, int samples_per_pixel){
