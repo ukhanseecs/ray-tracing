@@ -20,12 +20,9 @@ int main() {
     auto material_right = make_shared<metal>(color(0.8, 0.6, 0.2));
     auto material_metal = make_shared<metal>(color(0.8, 0.6, 0.2));
 
-    // Ground sphere (large sphere below)
-    list.add(make_shared<sphere>(Vector3D(0,-100.5, -1), 100, material_ground));
-    
-    // Main sphere in view
+    //Spheres
+    list.add(make_shared<sphere>(Vector3D(0,-100.5, -1), 100, material_ground)); // Ground sphere
     list.add(make_shared<sphere>(Vector3D(0,0, -1), 0.5, material_center));  // Main sphere
-
     // additional spheres
     list.add(make_shared<sphere>(Vector3D(1,0, -1), 0.5, material_right));  // Right sphere
     list.add(make_shared<sphere>(Vector3D(-1,0, -1), 0.5, material_left)); // Left sphere
