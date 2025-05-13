@@ -3,3 +3,7 @@
 raytracing.exe
 testvec3.exe
 /*.exe
+/*.ppm
+*.o
+output.ppm
+raytracing.o

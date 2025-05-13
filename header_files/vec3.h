@@ -181,6 +181,13 @@ class Vector3D{
         return vec - 2 * dot(vec, normal) * normal;
     };
 
+    inline Vector3D refract(const Vector3D& uv, const Vector3D& normal, double etai_over_etat) {
+        auto cos_theta = fmin(dot(-uv, normal), 1.0);
+        Vector3D r_out_perp = etai_over_etat * (uv + cos_theta * normal);
+        Vector3D r_out_parallel = -sqrt(fabs(1.0 - r_out_perp.length_squared())) * normal;
+        return r_out_perp + r_out_parallel;
+    }
+
 
 
 #endif

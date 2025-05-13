@@ -67,4 +67,27 @@ class metal : public material {
     
 };
 
+
+class dielectric : public material {
+    private:
+        double refractive_index;
+    public:
+        dielectric(double refractive_index) : refractive_index(refractive_index) {}
+
+        bool scatter(const Ray& r_in, const hit_record& rec, color& attenuation, Ray& scattered)
+        const override {
+            attenuation = color(1.0, 1.0, 1.0);
+            // Calculate the refraction ratio based on the front face of the hit record
+            double refraction_ratio = rec.front_face ? (1.0 / refractive_index) : refractive_index;
+
+            Vector3D unit_direction = unit_vec(r_in.getDirection());
+            // Calculate the cosine of the angle between the incoming ray, the normal and the refracted ray
+            Vector3D refracted = refract(unit_direction, rec.normal, refraction_ratio);
+
+            scattered = Ray(rec.p, refracted);
+            return true;
+        }
+
+};
+
 #endif
