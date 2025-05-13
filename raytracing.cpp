@@ -91,7 +91,7 @@ int main() {
     auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
     list.add(make_shared<sphere>(Vector3D(4, 1, 0), 1.0, material3));
 
-    list = hittable_list(make_shared<bvh_node>(list));
+    list = HittableList(make_shared<bvh_node>(list));
 
 
     camera cam;

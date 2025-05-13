@@ -14,7 +14,7 @@ class sphere : public hittable {
     public:
         // Constructor: initializes sphere with center point, radius, and material
         sphere(const Vector3D& cen, double r, shared_ptr<material> mat) 
-            : center(cen, Vector3D(0,0,0)), radius(std::fmax(0,radius)), mat(mat)
+            : center(Vector3D(0,0,0)), radius(std::fmax(0,radius)), mat(mat)
             {
                 auto rvec = Vector3D(radius, radius, radius);
                 bbox = aabb(cen - rvec, cen + rvec);
