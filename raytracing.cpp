@@ -142,5 +142,5 @@ int main() {
     cam.render(list, 100);
     auto end = std::chrono::high_resolution_clock::now(); // End time measurement
     std::chrono::duration<double> elapsed = end - start; // Calculate elapsed time
-    std::cout << "Elapsed time: " << elapsed.count() << " seconds\n"; // Print elapsed time
+    std::cerr << "Elapsed time: " << elapsed.count() << " seconds\n"; // Print elapsed time to console
 }
