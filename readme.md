@@ -4,9 +4,9 @@ A simple ray tracing implementation based on "Ray Tracing in One Weekend" series
 
 ## Demo
 
-![Ray tracing render example](./snapshots/100samp_output.png)
+![Ray tracing render example](./snapshots/1000samp_output.png)
 
-Sample render from the ray tracer showing spheres with different materials including diffuse, metal, and glass surfaces.
+Sample render from the ray tracer showing spheres with 0different materials including diffuse, metal, and glass surfaces.
 
 
 ## Features
