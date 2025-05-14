@@ -126,7 +126,7 @@ int main() {
 
     cam.aspect_ratio      = 16.0 / 9.0;
     cam.image_width       = 400;
-    cam.samples_per_pixel = 100;
+    cam.samples_per_pixel = 1000;
     cam.max_depth         = 50;
 
     cam.vfov     = 20;
@@ -139,7 +139,7 @@ int main() {
 
 
     auto start = std::chrono::high_resolution_clock::now(); // Start time measurement
-    cam.render(list, 100);
+    cam.render(list, 1000);
     auto end = std::chrono::high_resolution_clock::now(); // End time measurement
     std::chrono::duration<double> elapsed = end - start; // Calculate elapsed time
     std::cerr << "Elapsed time: " << elapsed.count() << " seconds\n"; // Print elapsed time to console

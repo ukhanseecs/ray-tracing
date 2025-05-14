@@ -2,6 +2,13 @@
 
 A simple ray tracing implementation based on "Ray Tracing in One Weekend" series.
 
+## Demo
+
+![Ray tracing render example](./images/100samp_output.png)
+
+Sample render from the ray tracer showing spheres with different materials including diffuse, metal, and glass surfaces.
+
+
 ## Features
 - Physically-based rendering with reflection, refraction, and diffuse materials
 - Support for spheres with various materials (diffuse, metal, glass)
